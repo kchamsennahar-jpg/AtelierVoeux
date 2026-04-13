@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégories | L'Atelier des Vœux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Réutilisation de ton style de base */
+        :root { --bg-color: #FDFCF9; --white: #FFFFFF; --gold: #C4A45C; --text-dark: #2C2C2C; --text-gray: #6B6B6B; --border-color: #EFEFEF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lato', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
+        h1, h2 { font-family: 'Playfair Display', serif; }
+        
+        .navbar { background-color: var(--bg-color); height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .nav-links { display: flex; gap: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); }
+
+        .page-header { background: var(--white); padding: 60px 50px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .section-padding { padding: 60px 50px; max-width: 1200px; margin: 0 auto; }
+        
+        /* Style spécifique aux catégories */
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .cat-card { background: var(--white); border-radius: 15px; padding: 40px; text-align: center; border: 1px solid var(--border-color); transition: 0.3s; cursor: pointer; }
+        .cat-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .cat-icon { font-size: 40px; color: var(--gold); margin-bottom: 20px; }
+        .cat-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px; }
+        .cat-count { font-size: 12px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i class="fa-regular fa-sun"></i> L'Atelier des Vœux</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="prestataires.html">Tous les prestataires</a></li>
+            <li><a href="categories.html" style="color: var(--gold);">Catégories</a></li>
+            <li><a href="reservations.html">Mes réservations</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Parcourir par catégorie</h1>
+        <p>Trouvez exactement ce dont vous avez besoin pour votre jour spécial.</p>
+    </header>
+
+    <section class="section-padding">
+        <div class="categories-grid">
+            <div class="cat-card">
+                <div class="cat-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h3>Traiteurs</h3>
+                <p class="cat-count">12 Prestataires</p>
+            </div>
+            <div class="cat-card">
+                <div class="cat-icon"><i class="fa-solid fa-camera"></i></div>
+                <h3>Photographes</h3>
+                <p class="cat-count">8 Prestataires</p>
+            </div>
+            <div class="cat-card">
+                <div class="cat-icon"><i class="fa-solid fa-music"></i></div>
+                <h3>Musiciens & DJ</h3>
+                <p class="cat-count">15 Prestataires</p>
+            </div>
+            <div class="cat-card">
+                <div class="cat-icon"><i class="fa-solid fa-house-chimney-window"></i></div>
+                <h3>Lieux de réception</h3>
+                <p class="cat-count">5 Prestataires</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

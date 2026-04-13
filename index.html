@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Atelier des Vœux | L'art de célébrer à Marrakech</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES DE COULEURS --- */
+        :root {
+            --bg-color: #FDFCF9;
+            --white: #FFFFFF;
+            --gold: #C4A45C;
+            --gold-light: #E8D3A2;
+            --text-dark: #2C2C2C;
+            --text-gray: #6B6B6B;
+            --border-color: #EFEFEF;
+            --dark-btn: #2b2b2b;
+        }
+
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lato', sans-serif; background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
+        h1, h2, h3, h4, .serif-font { font-family: 'Playfair Display', serif; font-weight: 400; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background-color: var(--bg-color); height: 80px; display: flex; align-items: center;
+            justify-content: space-between; padding: 0 50px; position: sticky; top: 0; z-index: 1000;
+        }
+        .nav-left { display: flex; align-items: center; gap: 30px; }
+        .menu-icon { font-size: 20px; cursor: pointer; color: var(--text-dark); }
+        
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); font-size: 22px; animation: spin 15s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .nav-links { display: flex; gap: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-gray); }
+        .nav-links a:hover { color: var(--gold); }
+
+        .btn-outline { border: 1px solid var(--gold); padding: 10px 25px; border-radius: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-outline:hover { background: var(--gold); color: var(--white); }
+
+        /* --- SIDEBAR MENU --- */
+        .sidebar {
+            position: fixed; top: 0; left: -350px; width: 350px; height: 100vh;
+            background-color: var(--white); box-shadow: 5px 0 30px rgba(0,0,0,0.05);
+            transition: 0.4s ease; z-index: 1500; padding: 40px; overflow-y: auto;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
+        .sidebar-top .menu-title { font-family: 'Playfair Display', serif; font-size: 24px; display: flex; align-items: center; gap: 10px; }
+        .sidebar-top .menu-title i { color: var(--gold); font-size: 20px; }
+        .close-sidebar { font-size: 20px; cursor: pointer; color: var(--text-gray); }
+        
+        .sidebar-section { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-gray); margin-bottom: 20px; margin-top: 40px; }
+        .sidebar-menu li { margin-bottom: 25px; }
+        .sidebar-menu a { font-size: 16px; display: flex; align-items: center; gap: 15px; color: var(--text-dark); transition: 0.3s; }
+        .sidebar-menu a:hover { color: var(--gold); }
+        .sidebar-menu i { width: 20px; text-align: center; font-size: 18px; color: var(--text-dark); }
+
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1400; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(2px); }
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 60vh; min-height: 500px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white);
+            padding: 0 20px;
+        }
+        .hero h1 { font-size: 56px; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .hero p { font-size: 18px; font-weight: 300; margin-bottom: 40px; letter-spacing: 1px; text-shadow: 0 1px 5px rgba(0,0,0,0.2); }
+
+        .search-bar {
+            background: var(--white); padding: 8px; border-radius: 50px;
+            display: flex; align-items: center; max-width: 800px; width: 100%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .search-input { flex: 1; border: none; padding: 15px 25px; outline: none; font-size: 14px; font-family: 'Lato', sans-serif; color: var(--text-dark); border-right: 1px solid var(--border-color); }
+        .search-input::placeholder { color: var(--text-gray); }
+        .search-date { flex: 1; border: none; padding: 15px 25px; outline: none; font-size: 14px; font-family: 'Lato', sans-serif; color: var(--text-gray); }
+        .btn-search { background: var(--gold); color: var(--white); border: none; padding: 15px 35px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
+        .btn-search:hover { background: #b3924f; }
+
+        /* --- CATEGORIES (VERTICAL CARDS) --- */
+        .section-padding { padding: 80px 50px; max-width: 1400px; margin: 0 auto; }
+        .section-title-wrapper { text-align: center; margin-bottom: 50px; }
+        .section-subtitle { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--gold); margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .section-subtitle::before, .section-subtitle::after { content: ""; width: 40px; height: 1px; background: var(--gold-light); }
+        .section-title { font-size: 42px; color: var(--text-dark); }
+
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .cat-card {
+            position: relative; height: 350px; border-radius: 16px; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 25px;
+            color: var(--white); text-align: left; cursor: pointer; transition: 0.4s;
+        }
+        .cat-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); z-index: 1; }
+        .cat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .cat-card > * { position: relative; z-index: 2; }
+        .cat-icon { width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 15px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); }
+        .cat-card h3 { font-size: 24px; margin-bottom: 5px; font-family: 'Playfair Display', serif; }
+        .cat-card p { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: rgba(255,255,255,0.8); }
+
+        /* --- FILTRES PILLS --- */
+        .filters-pills { display: flex; gap: 15px; justify-content: flex-start; margin-bottom: 40px; flex-wrap: wrap; }
+        .pill { border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 30px; font-size: 13px; color: var(--text-gray); cursor: pointer; transition: 0.3s; background: var(--white); }
+        .pill.active { background: var(--gold); color: var(--white); border-color: var(--gold); }
+        .pill:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+
+        /* --- COUPS DE COEUR --- */
+        .header-coups-coeur { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
+        .link-discover { font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; color: var(--text-dark); display: flex; align-items: center; gap: 5px; }
+        .link-discover:hover { color: var(--gold); }
+
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        .item-card { background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); transition: 0.3s; }
+        .item-card:hover { box-shadow: 0 15px 40px rgba(0,0,0,0.06); transform: translateY(-5px); }
+        
+        .item-img { height: 250px; background-size: cover; background-position: center; position: relative; }
+        .rating-badge { position: absolute; top: 15px; right: 15px; background: var(--white); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .rating-badge i { color: var(--gold); font-size: 10px; }
+
+        .item-body { padding: 25px; }
+        .item-category { font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; font-weight: 700; }
+        .item-title { font-size: 26px; color: var(--text-dark); margin-bottom: 25px; }
+        
+        .item-footer { border-top: 1px solid var(--border-color); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .item-price { font-size: 13px; color: var(--text-gray); }
+        .item-price span { font-size: 15px; color: var(--text-dark); font-family: 'Playfair Display', serif; }
+        
+        .btn-privilege { background: var(--dark-btn); color: var(--white); border: none; padding: 10px 20px; border-radius: 30px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
+        .btn-privilege:hover { background: var(--gold); }
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="menu-title"><i class="fa-regular fa-sun"></i> Menu</div>
+            <i class="fa-solid fa-xmark close-sidebar" onclick="toggleSidebar()"></i>
+        </div>
+
+        <div class="sidebar-section">Navigation</div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> Accueil</a></li>
+            <li><a href="prestataires.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Tous les prestataires</a></li>
+        </ul>
+
+        <div class="sidebar-section">L'art de recevoir</div>
+        <ul class="sidebar-menu">
+            <li><a href="categories.html"><i class="fa-solid fa-music"></i> DJ & Animation</a></li>
+            <li><a href="categories.html"><i class="fa-solid fa-utensils"></i> Haute Gastronomie</a></li>
+            <li><a href="categories.html"><i class="fa-solid fa-house-chimney"></i> Lieux d'Exception</a></li>
+            <li><a href="categories.html"><i class="fa-solid fa-camera"></i> Capture de l'Instant</a></li>
+            <li><a href="categories.html"><i class="fa-solid fa-star"></i> Scénographie</a></li>
+        </ul>
+    </aside>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <i class="fa-solid fa-bars menu-icon" onclick="toggleSidebar()"></i>
+            <div class="logo">
+                <i class="fa-regular fa-sun"></i> L'Atelier des Vœux
+            </div>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="prestataires.html">Tous les prestataires</a></li>
+            <li><a href="categories.html">Catégories</a></li>
+            <li><a href="reservations.html">Mes réservations</a></li>
+        </ul>
+
+       <a href="connexion.html" class="btn-outline" style="text-decoration: none;">
+    <i class="fa-regular fa-user"></i> Connexion
+</a>
+    </nav>
+
+    <header class="hero">
+        <h1>L'art de célébrer à Marrakech</h1>
+        <p>Trouvez les artisans de vos plus beaux souvenirs.</p>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Ex: Traiteur, DJ, Salle...">
+            <input type="date" class="search-date">
+            <button class="btn-search">Rechercher</button>
+        </div>
+    </header>
+
+    <section class="section-padding" style="background-color: var(--white);">
+        <div class="section-title-wrapper">
+            <div class="section-subtitle">L'excellence à votre service</div>
+            <h2 class="section-title">Créez votre événement sur-mesure</h2>
+        </div>
+
+        <div class="categories-grid">
+            <div class="cat-card" style="background: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover;">
+                <div class="cat-icon"><i class="fa-solid fa-music"></i></div>
+                <h3>DJ & Animation</h3>
+                <p>24 Adresses</p>
+            </div>
+            <div class="cat-card" style="background: url('https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover;">
+                <div class="cat-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h3>Traiteur</h3>
+                <p>18 Adresses</p>
+            </div>
+            <div class="cat-card" style="background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover;">
+                <div class="cat-icon"><i class="fa-solid fa-house"></i></div>
+                <h3>Salles de réception</h3>
+                <p>35 Adresses</p>
+            </div>
+            <div class="cat-card" style="background: url('https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80') center/cover;">
+                <div class="cat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>Décoration</h3>
+                <p>12 Adresses</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        
+        <div class="filters-pills">
+            <div class="pill active">Tous</div>
+            <div class="pill">Disponibles à ma date</div>
+            <div class="pill">Mieux notés <i class="fa-solid fa-star" style="color: var(--gold); margin-left: 5px;"></i></div>
+            <div class="pill">Prix : Croissant</div>
+        </div>
+
+        <div class="header-coups-coeur">
+            <div>
+                <div class="section-subtitle" style="justify-content: flex-start;">Sélection exclusive</div>
+                <h2 class="section-title">Coups de cœur de L'Atelier</h2>
+            </div>
+            <a href="prestataires.html" class="link-discover">Découvrir la collection <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="items-grid" id="liste-services">
+            </div>
+
+    </section>
+
+    <script>
+        // Menu Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // Fausse API basée sur tes maquettes pour le rendu parfait
+        const mockData = [
+            {
+                categorie: "Lieu d'exception",
+                nom: "Palais d'Hôtes Marrakech",
+                note: "4.9",
+                prix: "1500€",
+                unite: "",
+                image: "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                categorie: "Haute gastronomie",
+                nom: "L'Orangerie Traiteur",
+                note: "4.8",
+                prix: "85€",
+                unite: " / pers",
+                image: "https://images.unsplash.com/photo-1544025162-8313437e2fcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                categorie: "Ambiance musicale",
+                nom: "Amine R. DJ & Sax",
+                note: "5.0",
+                prix: "600€",
+                unite: " / Soirée",
+                image: "https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        function afficherServices(data) {
+            const container = document.getElementById('liste-services');
+            container.innerHTML = '';
+            
+            data.forEach(service => {
+                container.innerHTML += `
+                    <div class="item-card">
+                        <div class="item-img" style="background-image: url('${service.image}');">
+                            <div class="rating-badge"><i class="fa-solid fa-star"></i> ${service.note}</div>
+                        </div>
+                        <div class="item-body">
+                            <span class="item-category">${service.categorie}</span>
+                            <h3 class="item-title">${service.nom}</h3>
+                            <div class="item-footer">
+                                <div class="item-price">À partir de <br><span>${service.prix}</span>${service.unite}</div>
+                                <button class="btn-privilege">Privilège</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // --- LA LIAISON CORRIGÉE (sans le "s" à prestataire) ---
+        fetch('http://127.0.0.1:8000/api/prestataire')
+            .then(response => {
+                if (!response.ok) throw new Error("Le serveur Python ne répond pas");
+                return response.json();
+            })
+            .then(data => {
+                console.log("Données reçues de MySQL :", data);
+                
+                // On transforme les données de TA base pour ton design
+                const formattedData = data.map(d => ({
+                    categorie: d.ville || d.Ville || "Marrakech", 
+                    nom: d.nomEntreprise || d.nomentreprise || d.nom || "Prestataire inconnu",              
+                    note: d.noteMoyenne || d.notemoyenne || "5.0",      
+                    prix: "À partir de 1500 DH",      
+                    unite: "",
+                    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+                }));
+
+                // On affiche tes VRAIS prestataires !
+                afficherServices(formattedData);
+            })
+            .catch(error => {
+                console.error("Erreur de liaison :", error);
+                // Si ça rate, on affiche les fausses données pour ne pas laisser le site vide
+                afficherServices(mockData);
+            });
+    </script>
+</body>
+</html>

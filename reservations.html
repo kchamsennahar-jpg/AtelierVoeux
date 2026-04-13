@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Réservations | L'Atelier des Vœux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Styles communs */
+        :root { --bg-color: #FDFCF9; --white: #FFFFFF; --gold: #C4A45C; --text-dark: #2C2C2C; --text-gray: #6B6B6B; --border-color: #EFEFEF; }
+        body { font-family: 'Lato', sans-serif; background-color: var(--bg-color); }
+        .navbar { background-color: var(--bg-color); height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; border-bottom: 1px solid var(--border-color); }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; text-decoration: none; color: inherit; }
+        .nav-links { display: flex; gap: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); }
+
+        .page-header { background: var(--white); padding: 60px 50px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .section-padding { padding: 60px 50px; max-width: 1000px; margin: 0 auto; }
+
+        /* Style Tableau de Réservations */
+        .res-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        .res-table th { background: #F8F8F8; padding: 20px; text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); }
+        .res-table td { padding: 20px; border-bottom: 1px solid var(--border-color); }
+        .status { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .status.confirm { background: #E8F5E9; color: #2E7D32; }
+        .status.pending { background: #FFF3E0; color: #EF6C00; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i class="fa-regular fa-sun"></i> L'Atelier des Vœux</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="prestataires.html">Tous les prestataires</a></li>
+            <li><a href="categories.html">Catégories</a></li>
+            <li><a href="reservations.html" style="color: var(--gold);">Mes réservations</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Mes Réservations</h1>
+        <p>Suivez l'état de vos demandes et vos prochains rendez-vous.</p>
+    </header>
+
+    <section class="section-padding">
+        <table class="res-table">
+            <thead>
+                <tr>
+                    <th>Prestataire</th>
+                    <th>Date</th>
+                    <th>Service</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Palais Namaskar</strong></td>
+                    <td>12 Juin 2024</td>
+                    <td>Réception</td>
+                    <td><span class="status confirm">Confirmé</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Artisan Traiteur</strong></td>
+                    <td>12 Juin 2024</td>
+                    <td>Dîner complet</td>
+                    <td><span class="status pending">En attente</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>
