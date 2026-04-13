@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - L'Atelier des Vœux</title>
+    <style>
+        /* Un petit style basique pour que ce soit propre */
+        body { font-family: 'Playfair Display', serif; background-color: #FDFCFA; text-align: center; padding: 50px; }
+        form { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        input, select { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { background-color: #C4A45C; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; }
+        button:hover { background-color: #a88a45; }
+    </style>
+</head>
+<body>
+
+    <h2>Créer un compte</h2>
+    
+    <form id="form-inscription">
+        <input type="text" id="nom" placeholder="Ton Nom Complet" required>
+        <input type="email" id="email" placeholder="Ton Email" required>
+        <input type="password" id="mdp" placeholder="Mot de passe" required>
+        
+        <select id="role">
+            <option value="client">Client (Futurs mariés)</option>
+            <option value="prestataire">Prestataire</option>
+        </select>
+        
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <script>
+    document.getElementById('form-inscription').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Empêche la page de recharger
+
+        // On récupère ce que l'utilisateur a tapé
+        const donnees = {
+            nom: document.getElementById('nom').value,
+            email: document.getElementById('email').value,
+            mot_de_passe: document.getElementById('mdp').value,
+            role: document.getElementById('role').value
+        };
+
+        // On envoie au Python
+        try {
+            const reponse = await fetch('/api/inscription', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donnees)
+            });
+            
+            const resultat = await reponse.json();
+            
+            // On affiche le résultat
+            if (resultat.message) {
+                alert("Succès : " + resultat.message);
+            } else {
+                alert("Erreur : " + resultat.erreur);
+            }
+        } catch (erreur) {
+            console.error("Erreur:", erreur);
+            alert("Impossible de joindre le serveur.");
+        }
+    });
+    </script>
+
+</body>
+</html>

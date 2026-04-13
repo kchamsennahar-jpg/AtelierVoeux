@@ -46,3 +46,24 @@ def get_prestataire():
 def creer_utilisateur(id_user: int, email: str):
     # ... ton code existant
     pass
+
+from fastapi import Request
+
+# --- ROUTE POUR L'INSCRIPTION ---
+@app.post("/api/inscription")
+async def inscription(request: Request):
+    data = await request.json()
+    conn = connexion_bdd()
+    cursor = conn.cursor()
+    try:
+        sql = "INSERT INTO utilisateur (nom, email, mot_de_passe, role) VALUES (%s, %s, %s, %s)"
+        valeurs = (data['nom'], data['email'], data['mot_de_passe'], data['role'])
+        
+        cursor.execute(sql, valeurs)
+        conn.commit()
+        return {"message": "Inscription réussie ! Bienvenue."}
+    except Exception as e:
+        return {"erreur": f"Impossible de créer le compte : {str(e)}"}
+    finally:
+        cursor.close()
+        conn.close()
