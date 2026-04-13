@@ -120,21 +120,50 @@
 
         // --- ICI ON VA CONNECTER AVEC TON PYTHON PLUS TARD ---
         function seConnecter() {
-            const email = document.getElementById('login-email').value;
-            const mdp = document.getElementById('login-password').value;
-            console.log("Tentative de connexion pour :", email);
-            // On ajoutera le fetch('http://127.0.0.1:8000/api/login') ici
-            alert("Le design est prêt ! Il faut maintenant relier ça à ta base Python.");
-        }
+    const email = document.getElementById('login-email').value;
+    const mdp = document.getElementById('login-password').value;
+    
+    console.log("Tentative de connexion pour :", email);
+    
+    // Bientôt on mettra le vrai code Python pour la connexion ici, 
+    // mais pour l'instant on met une alerte plus propre :
+    alert("La fonction de connexion arrive bientôt ! On finit d'abord l'inscription.");
+}
 
-        function sInscrire() {
-            const role = document.getElementById('reg-role').value;
-            const nom = document.getElementById('reg-nom').value;
-            const email = document.getElementById('reg-email').value;
-            console.log("Nouvelle inscription :", nom, role);
-            // On ajoutera le fetch('http://127.0.0.1:8000/api/register') ici
-            alert("Formulaire d'inscription prêt !");
+function sInscrire() {
+    const role = document.getElementById('reg-role').value;
+    const nom = document.getElementById('reg-nom').value;
+    const email = document.getElementById('reg-email').value;
+    const mdp = document.getElementById('reg-password').value; // J'ai ajouté le mot de passe !
+    
+    console.log("Nouvelle inscription :", nom, role);
+    
+    const donnees = {
+        nom: nom,
+        email: email,
+        mot_de_passe: mdp,
+        role: role
+    };
+
+    // Le VRAI lien vers ton cerveau Python
+    fetch('http://127.0.0.1:8000/api/inscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(donnees)
+    })
+    .then(response => response.json())
+    .then(resultat => {
+        if (resultat.message) {
+            alert("Succès : " + resultat.message); // Ça a marché !
+        } else {
+            alert("Erreur : " + resultat.erreur); // Ex: Email déjà pris
         }
+    })
+    .catch(erreur => {
+        console.error("Problème :", erreur);
+        alert("Impossible de joindre le serveur Python.");
+    });
+}
     </script>
 </body>
 </html>
