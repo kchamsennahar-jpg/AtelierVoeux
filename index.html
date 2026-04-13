@@ -142,17 +142,63 @@
 /* ... ici il y a tout ton ancien code CSS (tes couleurs, tes boutons, etc.) ... */
 
 
-    /* --- CODE SPECIAL MOBILE --- */
+    /* --- NOUVEAU CODE SPECIAL MOBILE --- */
     @media (max-width: 768px) {
-        h1 { font-size: 24px !important; line-height: 1.2 !important; }
-        .search-bar { display: flex; flex-direction: column !important; width: 95% !important; padding: 10px !important; }
-        .search-bar input, .search-bar button { width: 100% !important; margin: 5px 0 !important; border-radius: 8px !important; }
-        nav { flex-direction: column; gap: 10px; }
+        
+        /* 1. Ranger le menu en haut proprement */
+        nav, header, .navbar {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center;
+            gap: 15px !important;
+            padding: 15px 0 !important;
+            height: auto !important;
+        }
+        
+        /* Espacer les liens du menu */
+        nav ul, .nav-links {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            padding: 0 !important;
+        }
+
+        /* 2. Réparer la barre de recherche et faire revenir la date */
+        .search-bar, form {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 90% !important;
+            margin: 0 auto !important;
+            gap: 10px !important;
+            background: transparent !important;
+        }
+
+        .search-bar input, .search-bar select, .search-bar button {
+            width: 100% !important;
+            height: 50px !important;
+            border-radius: 8px !important;
+            margin: 0 !important;
+            box-sizing: border-box !important; /* Empêche de déborder de l'écran */
+        }
+
+        /* 3. Dé-serrer les photos des catégories et prestataires */
+        .items-grid, .categories {
+            display: grid !important;
+            grid-template-columns: 1fr !important; /* Met 1 seule photo par ligne au lieu de 4 */
+            gap: 20px !important;
+            padding: 15px !important;
+        }
+
+        .item-card, .card {
+            width: 100% !important;
+            height: 250px !important; /* Redonne une belle hauteur aux photos */
+        }
     }
 
 </style>
 </head>
-<body>
+<body>      
     </style>
 </head>
 <body>
