@@ -142,10 +142,10 @@
 /* ... ici il y a tout ton ancien code CSS (tes couleurs, tes boutons, etc.) ... */
 
 
-   /* --- NOUVEAU CODE SPECIAL MOBILE GLOBAL --- */
+   /* --- NOUVEAU CODE SPECIAL MOBILE GLOBAL (VERSION FINALE) --- */
     @media (max-width: 768px) {
         
-        /* 1. Menu propre sur toutes les pages */
+        /* 1. Menu propre */
         nav, header, .navbar {
             display: flex !important;
             flex-direction: column !important;
@@ -163,7 +163,7 @@
             padding: 0 !important;
         }
 
-        /* 2. Barre de recherche ET CHAMP DATE (Réparé) */
+        /* 2. Barre de recherche et DATE (Réparée pour iPhone) */
         .search-bar, form {
             display: flex !important;
             flex-direction: column !important;
@@ -173,39 +173,53 @@
             background: transparent !important;
         }
 
-        /* Le code magique pour que la date revienne */
-        .search-bar input, .search-bar input[type="date"], .search-bar select, .search-bar button, form input {
-            display: block !important;
+        .search-bar input, .search-bar select, .search-bar button, form input {
             width: 100% !important;
-            min-height: 50px !important; /* Empêche le téléphone d'écraser la date */
-            height: 50px !important;
+            min-height: 55px !important; /* Hauteur forcée */
+            height: 55px !important;
             border-radius: 8px !important;
             margin: 0 !important;
-            padding: 10px !important;
+            padding: 15px !important;
             box-sizing: border-box !important; 
-            font-size: 16px !important; /* Empêche l'iPhone de zoomer tout seul */
+            font-size: 16px !important; 
             background-color: #fff !important; 
             color: #000 !important;
             border: 1px solid #ccc !important;
+            -webkit-appearance: none !important; /* LE SECRET POUR L'IPHONE */
+            appearance: none !important;
+            display: block !important;
         }
 
-        /* 3. Photos et Grilles sur toutes les pages */
+        /* 3. Photos et Services (Réparés) */
         .items-grid, .categories, .prestataires-list {
             display: grid !important;
-            grid-template-columns: 1fr !important; /* 1 photo par ligne */
+            grid-template-columns: 1fr !important; 
             gap: 20px !important;
             padding: 15px !important;
         }
 
         .item-card, .card {
             width: 100% !important;
-            min-height: 250px !important; 
+            min-height: 250px !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        /* On force la photo à reprendre sa taille */
+        .item-img, .card-img, .service-img {
+            min-height: 200px !important; 
+            width: 100% !important;
+            background-size: cover !important;
+            background-position: center !important;
+            display: block !important;
+        }
+        
+        /* Au cas où ce sont de vraies images (<img>) */
+        img {
+            max-width: 100% !important;
+            height: auto !important;
         }
     }
-
-</style>
-</head>
-<body>      
     </style>
 </head>
 <body>
