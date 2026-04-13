@@ -15,10 +15,11 @@ app.add_middleware(
 
 def connexion_bdd():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="myevents_db"
+        host="METS_ICI_TON_MYSQLHOST",
+        user="METS_ICI_TON_MYSQLUSER",
+        password="METS_ICI_TON_MYSQLPASSWORD",
+        database="METS_ICI_TON_MYSQLDATABASE",
+        port=3306 # ou le port indiqué sur Railway
     )
 
 @app.get("/")
