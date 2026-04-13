@@ -142,10 +142,10 @@
 /* ... ici il y a tout ton ancien code CSS (tes couleurs, tes boutons, etc.) ... */
 
 
-    /* --- NOUVEAU CODE SPECIAL MOBILE --- */
+   /* --- NOUVEAU CODE SPECIAL MOBILE GLOBAL --- */
     @media (max-width: 768px) {
         
-        /* 1. Ranger le menu en haut proprement */
+        /* 1. Menu propre sur toutes les pages */
         nav, header, .navbar {
             display: flex !important;
             flex-direction: column !important;
@@ -156,7 +156,6 @@
             height: auto !important;
         }
         
-        /* Espacer les liens du menu */
         nav ul, .nav-links {
             display: flex !important;
             flex-direction: column !important;
@@ -164,7 +163,7 @@
             padding: 0 !important;
         }
 
-        /* 2. Réparer la barre de recherche et faire revenir la date */
+        /* 2. Barre de recherche ET CHAMP DATE (Réparé) */
         .search-bar, form {
             display: flex !important;
             flex-direction: column !important;
@@ -174,25 +173,33 @@
             background: transparent !important;
         }
 
-        .search-bar input, .search-bar select, .search-bar button {
+        /* Le code magique pour que la date revienne */
+        .search-bar input, .search-bar input[type="date"], .search-bar select, .search-bar button, form input {
+            display: block !important;
             width: 100% !important;
+            min-height: 50px !important; /* Empêche le téléphone d'écraser la date */
             height: 50px !important;
             border-radius: 8px !important;
             margin: 0 !important;
-            box-sizing: border-box !important; /* Empêche de déborder de l'écran */
+            padding: 10px !important;
+            box-sizing: border-box !important; 
+            font-size: 16px !important; /* Empêche l'iPhone de zoomer tout seul */
+            background-color: #fff !important; 
+            color: #000 !important;
+            border: 1px solid #ccc !important;
         }
 
-        /* 3. Dé-serrer les photos des catégories et prestataires */
-        .items-grid, .categories {
+        /* 3. Photos et Grilles sur toutes les pages */
+        .items-grid, .categories, .prestataires-list {
             display: grid !important;
-            grid-template-columns: 1fr !important; /* Met 1 seule photo par ligne au lieu de 4 */
+            grid-template-columns: 1fr !important; /* 1 photo par ligne */
             gap: 20px !important;
             padding: 15px !important;
         }
 
         .item-card, .card {
             width: 100% !important;
-            height: 250px !important; /* Redonne une belle hauteur aux photos */
+            min-height: 250px !important; 
         }
     }
 

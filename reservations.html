@@ -26,6 +26,66 @@
         .status { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
         .status.confirm { background: #E8F5E9; color: #2E7D32; }
         .status.pending { background: #FFF3E0; color: #EF6C00; }
+    /* --- NOUVEAU CODE SPECIAL MOBILE GLOBAL --- */
+    @media (max-width: 768px) {
+        
+        /* 1. Menu propre sur toutes les pages */
+        nav, header, .navbar {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center;
+            gap: 15px !important;
+            padding: 15px 0 !important;
+            height: auto !important;
+        }
+        
+        nav ul, .nav-links {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            padding: 0 !important;
+        }
+
+        /* 2. Barre de recherche ET CHAMP DATE (Réparé) */
+        .search-bar, form {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 90% !important;
+            margin: 0 auto !important;
+            gap: 10px !important;
+            background: transparent !important;
+        }
+
+        /* Le code magique pour que la date revienne */
+        .search-bar input, .search-bar input[type="date"], .search-bar select, .search-bar button, form input {
+            display: block !important;
+            width: 100% !important;
+            min-height: 50px !important; /* Empêche le téléphone d'écraser la date */
+            height: 50px !important;
+            border-radius: 8px !important;
+            margin: 0 !important;
+            padding: 10px !important;
+            box-sizing: border-box !important; 
+            font-size: 16px !important; /* Empêche l'iPhone de zoomer tout seul */
+            background-color: #fff !important; 
+            color: #000 !important;
+            border: 1px solid #ccc !important;
+        }
+
+        /* 3. Photos et Grilles sur toutes les pages */
+        .items-grid, .categories, .prestataires-list {
+            display: grid !important;
+            grid-template-columns: 1fr !important; /* 1 photo par ligne */
+            gap: 20px !important;
+            padding: 15px !important;
+        }
+
+        .item-card, .card {
+            width: 100% !important;
+            min-height: 250px !important; 
+        }
+    }
     </style>
 </head>
 <body>
