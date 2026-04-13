@@ -9,6 +9,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    /* --- CODE SPECIAL MOBILE --- */
+@media (max-width: 768px) {
+    /* Le titre ne doit pas être géant */
+    h1 {
+        font-size: 24px !important;
+        line-height: 1.2 !important;
+    }
+
+    /* La barre de recherche doit être verticale */
+    .search-bar {
+        display: flex;
+        flex-direction: column !important;
+        width: 95% !important;
+        padding: 10px !important;
+    }
+
+    .search-bar input, .search-bar button {
+        width: 100% !important;
+        margin: 5px 0 !important;
+        border-radius: 8px !important;
+    }
+
+    /* Le menu en haut */
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
     <style>
         /* --- VARIABLES DE COULEURS --- */
         :root {
