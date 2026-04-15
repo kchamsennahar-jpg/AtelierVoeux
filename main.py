@@ -1,10 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
 
 app = FastAPI()
 
-# Sécurité (CORS) configurée une seule fois
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
@@ -15,41 +14,36 @@ app.add_middleware(
 
 def connexion_bdd():
     return mysql.connector.connect(
-        host="mysql.railway.internal",
+        host="mainline.proxy.rlwy.net",
         user="root",
         password="LCwiUHQOmgIpQrFRirDxnIPuUYZzJoTb",
         database="railway",
-        port=3306 # ou le port indiqué sur Railway
+        port=27975
     )
+
+# Création de la table automatique au démarrage
+try:
+    conn = connexion_bdd()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS utilisateur (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nom VARCHAR(100),
+            email VARCHAR(100) UNIQUE,
+            mot_de_passe VARCHAR(255),
+            role VARCHAR(50)
+        )
+    """)
+    conn.commit()
+    cursor.close()
+    conn.close()
+except Exception as e:
+    print(f"Erreur table: {e}")
 
 @app.get("/")
 def accueil():
-    return {"message": "Serveur Marrakech opérationnel !"}
+    return {"status": "online", "message": "Serveur Marrakech OK"}
 
-# --- LA FAMEUSE ROUTE POUR TON SITE WEB ---
-@app.get("/api/prestataire")
-def get_prestataire():
-    try:
-        db = connexion_bdd()
-        cursor = db.cursor(dictionary=True)
-        # On récupère tous tes prestataires
-        cursor.execute("SELECT * FROM prestataire") 
-        resultats = cursor.fetchall()
-        db.close()
-        return resultats
-    except Exception as e:
-        print(f"ERREUR MYSQL : {e}")
-        return {"erreur_detaillee": str(e)}
-
-# (J'ai gardé tes autres routes en dessous pour qu'elles fonctionnent toujours)
-@app.post("/creer-utilisateur")
-def creer_utilisateur(id_user: int, email: str):
-    # ... ton code existant
-    pass
-
-from fastapi import Request
-
-# --- ROUTE POUR L'INSCRIPTION ---
 @app.post("/api/inscription")
 async def inscription(request: Request):
     data = await request.json()
@@ -58,12 +52,28 @@ async def inscription(request: Request):
     try:
         sql = "INSERT INTO utilisateur (nom, email, mot_de_passe, role) VALUES (%s, %s, %s, %s)"
         valeurs = (data['nom'], data['email'], data['mot_de_passe'], data['role'])
-        
         cursor.execute(sql, valeurs)
         conn.commit()
-        return {"message": "Inscription réussie ! Bienvenue."}
+        return {"message": "Inscription réussie !"}
     except Exception as e:
-        return {"erreur": f"Impossible de créer le compte : {str(e)}"}
+        return {"erreur": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.post("/api/connexion")
+async def connexion(request: Request):
+    data = await request.json()
+    conn = connexion_bdd()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        sql = "SELECT * FROM utilisateur WHERE email = %s AND mot_de_passe = %s"
+        cursor.execute(sql, (data['email'], data['mdp']))
+        user = cursor.fetchone()
+        if user:
+            return {"message": "OK", "role": user['role'], "nom": user['nom']}
+        else:
+            return {"erreur": "Identifiants incorrects"}
     finally:
         cursor.close()
         conn.close()
