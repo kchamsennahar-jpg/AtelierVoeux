@@ -1,169 +1,85 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion | L'Atelier des Vœux</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root { --bg-color: #FDFCF9; --white: #FFFFFF; --gold: #C4A45C; --text-dark: #2C2C2C; --text-gray: #6B6B6B; --border-color: #EFEFEF; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Lato', sans-serif; background: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1920&q=80') center/cover; height: 100vh; display: flex; align-items: center; justify-content: center; }
-        
-        /* Overlay sombre pour bien voir la carte */
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1; }
+<script>
+    // Fonction pour l'animation du bouton et changer de formulaire
+    function switchForm(type) {
+        const btnBg = document.getElementById('btn-bg');
+        const btns = document.querySelectorAll('.toggle-btn');
+        const formLogin = document.getElementById('form-login');
+        const formRegister = document.getElementById('form-register');
 
-        .auth-container { position: relative; z-index: 2; background: var(--white); width: 100%; max-width: 450px; border-radius: 20px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); text-align: center; overflow: hidden; }
-        
-        .logo { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--text-dark); text-decoration: none; display: block; margin-bottom: 30px; }
-        .logo i { color: var(--gold); }
-
-        /* Boutons pour basculer (Toggle) */
-        .toggle-box { display: flex; background: #f5f5f5; border-radius: 30px; margin-bottom: 30px; position: relative; }
-        .toggle-btn { flex: 1; padding: 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; cursor: pointer; color: var(--text-gray); transition: 0.3s; z-index: 2; }
-        .toggle-btn.active { color: var(--white); }
-        .toggle-bg { position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: var(--gold); border-radius: 30px; transition: 0.4s ease; z-index: 1; }
-
-        /* Formulaires */
-        .form-box { display: none; animation: fadeIn 0.4s; text-align: left; }
-        .form-box.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-gray); margin-bottom: 8px; }
-        .input-group input, .input-group select { width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Lato', sans-serif; font-size: 14px; outline: none; transition: 0.3s; }
-        .input-group input:focus, .input-group select:focus { border-color: var(--gold); }
-
-        .btn-submit { width: 100%; background: var(--text-dark); color: var(--white); border: none; padding: 15px; border-radius: 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-submit:hover { background: var(--gold); }
-
-        .back-home { display: inline-block; margin-top: 20px; font-size: 12px; color: var(--text-gray); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
-        .back-home:hover { color: var(--gold); border-color: var(--gold); }
-    </style>
-</head>
-<body>
-
-    <div class="overlay"></div>
-
-    <div class="auth-container">
-        <a href="index.html" class="logo"><i class="fa-regular fa-sun"></i> L'Atelier</a>
-
-        <div class="toggle-box">
-            <div class="toggle-bg" id="btn-bg"></div>
-            <div class="toggle-btn active" onclick="switchForm('login')">Connexion</div>
-            <div class="toggle-btn" onclick="switchForm('register')">Inscription</div>
-        </div>
-
-        <form id="form-login" class="form-box active" onsubmit="event.preventDefault(); seConnecter();">
-            <div class="input-group">
-                <label>Adresse e-mail</label>
-                <input type="email" id="login-email" placeholder="votre@email.com" required>
-            </div>
-            <div class="input-group">
-                <label>Mot de passe</label>
-                <input type="password" id="login-password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn-submit">Se connecter</button>
-        </form>
-
-        <form id="form-register" class="form-box" onsubmit="event.preventDefault(); sInscrire();">
-            <div class="input-group">
-                <label>Je suis un(e)...</label>
-                <select id="reg-role">
-                    <option value="client">Client (Je prépare un événement)</option>
-                    <option value="prestataire">Prestataire (Je propose mes services)</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Nom complet / Nom de l'entreprise</label>
-                <input type="text" id="reg-nom" placeholder="Ex: Jean Dupont" required>
-            </div>
-            <div class="input-group">
-                <label>Adresse e-mail</label>
-                <input type="email" id="reg-email" placeholder="votre@email.com" required>
-            </div>
-            <div class="input-group">
-                <label>Mot de passe</label>
-                <input type="password" id="reg-password" placeholder="Minimum 8 caractères" required>
-            </div>
-            <button type="submit" class="btn-submit">Créer mon compte</button>
-        </form>
-
-        <a href="index.html" class="back-home"><i class="fa-solid fa-arrow-left"></i> Retour à l'accueil</a>
-    </div>
-
-    <script>
-        // Fonction pour l'animation du bouton et changer de formulaire
-        function switchForm(type) {
-            const btnBg = document.getElementById('btn-bg');
-            const btns = document.querySelectorAll('.toggle-btn');
-            const formLogin = document.getElementById('form-login');
-            const formRegister = document.getElementById('form-register');
-
-            if (type === 'login') {
-                btnBg.style.left = '0';
-                btns[0].classList.add('active');
-                btns[1].classList.remove('active');
-                formLogin.classList.add('active');
-                formRegister.classList.remove('active');
-            } else {
-                btnBg.style.left = '50%';
-                btns[1].classList.add('active');
-                btns[0].classList.remove('active');
-                formRegister.classList.add('active');
-                formLogin.classList.remove('active');
-            }
-        }
-
-        // --- ICI ON VA CONNECTER AVEC TON PYTHON PLUS TARD ---
-        function seConnecter() {
-    const email = document.getElementById('login-email').value;
-    const mdp = document.getElementById('login-password').value;
-    
-    console.log("Tentative de connexion pour :", email);
-    
-    // Bientôt on mettra le vrai code Python pour la connexion ici, 
-    // mais pour l'instant on met une alerte plus propre :
-    alert("La fonction de connexion arrive bientôt ! On finit d'abord l'inscription.");
-}
-
-function sInscrire() {
-    const role = document.getElementById('reg-role').value;
-    const nom = document.getElementById('reg-nom').value;
-    const email = document.getElementById('reg-email').value;
-    const mdp = document.getElementById('reg-password').value; // J'ai ajouté le mot de passe !
-    
-    console.log("Nouvelle inscription :", nom, role);
-    
-    const donnees = {
-        nom: nom,
-        email: email,
-        mot_de_passe: mdp,
-        role: role
-    };
-
-    // Le VRAI lien vers ton cerveau Python
-    fetch('http://127.0.0.1:8000/api/inscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(donnees)
-    })
-    .then(response => response.json())
-    .then(resultat => {
-        if (resultat.message) {
-            alert("Succès : " + resultat.message); // Ça a marché !
+        if (type === 'login') {
+            btnBg.style.left = '0';
+            btns[0].classList.add('active');
+            btns[1].classList.remove('active');
+            formLogin.classList.add('active');
+            formRegister.classList.remove('active');
         } else {
-            alert("Erreur : " + resultat.erreur); // Ex: Email déjà pris
+            btnBg.style.left = '50%';
+            btns[1].classList.add('active');
+            btns[0].classList.remove('active');
+            formRegister.classList.add('active');
+            formLogin.classList.remove('active');
         }
-    })
-    .catch(erreur => {
-        console.error("Problème :", erreur);
-        alert("Impossible de joindre le serveur Python.");
-    });
-}
-    </script>
-</body>
-</html>
+    }
+
+    // --- CONFIGURATION : TON ADRESSE VERCEL ---
+    const API_URL = "https://atelier-voeux-git-main-kchamsennahar-jpgs-projects.vercel.app/api";
+
+    // --- 1. FONCTION SE CONNECTER ---
+    async function seConnecter() {
+        const email = document.getElementById('login-email').value;
+        const mdp = document.getElementById('login-password').value;
+        
+        try {
+            const response = await fetch(`${API_URL}/connexion`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, mdp: mdp })
+            });
+            
+            const resultat = await response.json();
+            
+            if (resultat.message === "OK") {
+                alert("Bienvenue " + resultat.nom + " !");
+                // Redirection selon le rôle
+                if (resultat.role === 'admin') {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "index.html"; // Ou page profil
+                }
+            } else {
+                alert("Erreur : " + resultat.erreur);
+            }
+        } catch (erreur) {
+            alert("Erreur de connexion au serveur.");
+        }
+    }
+
+    // --- 2. FONCTION S'INSCRIRE ---
+    async function sInscrire() {
+        const role = document.getElementById('reg-role').value;
+        const nom = document.getElementById('reg-nom').value;
+        const email = document.getElementById('reg-email').value;
+        const mdp = document.getElementById('reg-password').value;
+        
+        const donnees = { nom, email, mot_de_passe: mdp, role };
+
+        try {
+            const response = await fetch(`${API_URL}/inscription`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(donnees)
+            });
+            
+            const resultat = await response.json();
+            
+            if (resultat.message) {
+                alert("Inscription réussie ! Vous pouvez maintenant vous connecter.");
+                switchForm('login'); // On renvoie l'utilisateur vers la connexion
+            } else {
+                alert("Erreur : " + resultat.erreur);
+            }
+        } catch (erreur) {
+            alert("Impossible de joindre le serveur.");
+        }
+    }
+</script>
