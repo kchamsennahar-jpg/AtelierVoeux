@@ -43,7 +43,7 @@ async def inscription(request: Request):
     finally:
         if 'conn' in locals(): conn.close()
 
-@app.post("/api/connexion")
+@app.post("/inscription")
 async def connexion(request: Request):
     data = await request.json()
     try:
